@@ -1,0 +1,6 @@
+<h2>Liste des Employeurs</h2>
+<ul>
+  <li *ngFor="let employer of employers">
+    {{ employer.name }} - {{ employer.email }} ({{ employer.companyName }})
+  </li>
+</ul>

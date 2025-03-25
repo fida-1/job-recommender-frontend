@@ -1,0 +1,6 @@
+<h2>Liste des Candidatures</h2>
+<ul>
+  <li *ngFor="let app of applications">
+    {{ app.candidate.name }} - {{ app.jobOffer.title }} (Status: {{ app.status }})
+  </li>
+</ul>

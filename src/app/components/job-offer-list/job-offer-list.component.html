@@ -1,0 +1,8 @@
+<div class="job-offer-list">
+  <h2>Liste des Offres d'Emploi</h2>
+  <ul>
+    <li *ngFor="let job of jobOffers">
+      <strong>{{ job.title }}</strong> - {{ job.company }} ({{ job.location }})
+    </li>
+  </ul>
+</div>

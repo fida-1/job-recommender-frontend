@@ -1,0 +1,11 @@
+<div class="profile-list">
+    <h2>Liste des Profils</h2>
+    <ul>
+      <li *ngFor="let profile of profiles">
+        <strong>{{ profile.firstName }} {{ profile.lastName }}</strong><br>
+        Email: {{ profile.email }}<br>
+        Téléphone: {{ profile.phone }}<br><br>
+      </li>
+    </ul>
+  </div>
+  

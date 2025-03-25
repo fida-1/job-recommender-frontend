@@ -1,0 +1,11 @@
+<h2>Liste des Logs d'Action</h2>
+<ul *ngIf="logs.length > 0; else noLogs">
+  <li *ngFor="let log of logs">
+    <strong>{{ log.actionDate | date:'dd/MM/yyyy HH:mm' }}</strong> - 
+    {{ log.actionDescription }} (Par: {{ log.performedBy }})
+  </li>
+</ul>
+
+<ng-template #noLogs>
+  <p>Aucun log trouvé.</p>
+</ng-template>

@@ -1,0 +1,9 @@
+<div class="cv-container">
+    <h2>Liste des CVs</h2>
+    <ul>
+      <li *ngFor="let cv of cvs">
+        <strong>{{ cv.name }}</strong> - {{ cv.position }} ({{ cv.experience }})
+      </li>
+    </ul>
+  </div>
+  
