@@ -1,4 +1,7 @@
 export interface Application {
+candidate: any;
+jobOffer: any;
+status: any;
     id?: number;
     candidateId: number;   // ID du candidat (vous pouvez aussi utiliser une interface Candidate si vous la définissez)
     jobOfferId: number;    // ID de l'offre d'emploi
