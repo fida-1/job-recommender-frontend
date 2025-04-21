@@ -10,269 +10,224 @@ import { JobOfferService, JobOffer } from '../services/joboffer.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   template: `
-    <div class="search-results-container">
-      <div class="search-card">
-        <div class="search-header">
-          <h2 class="search-title">"{{ searchTerm }}"</h2>
-          <p class="results-count">{{ getTotalResults() }} résultats trouvés</p>
+    <div class="auth-container">
+      <div class="auth-card">
+        <div class="auth-header">
+          <h2>"{{ searchTerm }}"</h2>
+          <p class="auth-subtitle">{{ getTotalResults() }} results found</p>
         </div>
 
-        <div class="results-section">
-          <div *ngIf="searchCompanies.length" class="category-block">
-            <h3 class="category-title">
+        <div class="results-content">
+          <!-- Companies Section -->
+          <div *ngIf="searchCompanies.length" class="category-section">
+            <div class="section-header">
               <span class="icon">🏢</span>
-              Entreprises <span class="badge">{{ searchCompanies.length }}</span>
-            </h3>
-            <ul class="results-list">
-              <li *ngFor="let company of searchCompanies" class="result-item company-item">
-                <div class="item-content">
-                  <span class="highlight">{{ company.companyName }}</span>
+              <h3>Companies</h3>
+              <span class="counter-badge">{{ searchCompanies.length }}</span>
+            </div>
+            <div class="results-grid">
+              <div *ngFor="let company of searchCompanies" class="result-card">
+                <div class="card-content">
+                  <span class="company-icon">🏭</span>
+                  <h4 class="company-name">{{ company.companyName }}</h4>
                 </div>
-              </li>
-            </ul>
+              </div>
+            </div>
           </div>
 
-          <div *ngIf="searchJobs.length" class="category-block">
-            <h3 class="category-title">
+          <!-- Jobs Section -->
+          <div *ngIf="searchJobs.length" class="category-section">
+            <div class="section-header">
               <span class="icon">💼</span>
-              Offres d'emploi <span class="badge">{{ searchJobs.length }}</span>
-            </h3>
-            <ul class="results-list">
-              <li *ngFor="let job of searchJobs" class="result-item job-item">
-                <div class="item-content">
-                  <span class="job-title">{{ job.title }}</span>
-                  <span class="company-name">{{ job.company }}</span>
+              <h3>Job Offers</h3>
+              <span class="counter-badge">{{ searchJobs.length }}</span>
+            </div>
+            <div class="results-grid">
+              <div *ngFor="let job of searchJobs" class="result-card">
+                <div class="card-content">
+                  <div class="job-meta">
+                    <span class="job-icon">📌</span>
+                    <div class="job-info">
+                      <h4 class="job-title">{{ job.title }}</h4>
+                      <p class="company-name">{{ job.company }}</p>
+                    </div>
+                  </div>
                 </div>
-              </li>
-            </ul>
+              </div>
+            </div>
           </div>
 
-          <div *ngIf="!searchCompanies.length && !searchJobs.length" class="no-results">
-            <div class="no-results-content">
-              <span class="icon">🔍</span>
-              <p>Aucun résultat trouvé pour<br>"{{ searchTerm }}"</p>
+          <!-- Empty State -->
+          <div *ngIf="!searchCompanies.length && !searchJobs.length" class="empty-state">
+            <div class="empty-content">
+              <span class="empty-icon">🔍</span>
+              <h3>No results found for "{{ searchTerm }}"</h3>
+              <p>Try different keywords or check your spelling</p>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="decorative-elements">
-        <div class="decorative-circle circle-1"></div>
-        <div class="decorative-circle circle-2"></div>
-        <div class="decorative-circle circle-3"></div>
+      <div class="auth-decoration">
+        <div class="decoration-circle"></div>
+        <div class="decoration-circle"></div>
+        <div class="decoration-circle"></div>
       </div>
     </div>
   `,
   styles: [`
-    /* Variables CSS */
+    /* Variables IDENTIQUES à Register */
     :root {
-      --primary-color: #0056b3;
-      --secondary-color: #e6f0f8;
-      --text-color: #333;
-      --muted-text: #6c757d;
-      --background-gradient: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-      --shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+      --primary-blue: #0056b3;
+      --secondary-blue: #e6f0f8;
+      --text-dark: #333;
+      --text-muted: #6c757d;
+      --background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      --radius: 16px;
     }
 
-    /* Main container */
-    .search-results-container {
+    .auth-container {
       display: flex;
       min-height: 100vh;
-      background: var(--background-gradient);
+      background: var(--background);
       padding: 2rem;
       position: relative;
       overflow: hidden;
       font-family: 'Segoe UI', system-ui, sans-serif;
     }
 
-    /* Card styling */
-    .search-card {
+    .auth-card {
       background: white;
-      border-radius: 20px;
+      border-radius: var(--radius);
       box-shadow: var(--shadow);
       padding: 2.5rem;
       width: 100%;
       max-width: 800px;
       margin: auto;
       z-index: 2;
-      position: relative;
-      transition: transform 0.3s ease;
     }
 
-    /* Header */
-    .search-header {
+    .auth-header {
       text-align: center;
+      margin-bottom: 2rem;
+      
+      h2 {
+        color: var(--primary-blue);
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+      }
+    }
+
+    .auth-subtitle {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .category-section {
       margin-bottom: 2.5rem;
     }
 
-    .search-title {
-      color: var(--primary-color);
-      font-size: 2.2rem;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      margin-bottom: 0.25rem;
-    }
-
-    .results-count {
-      color: var(--muted-text);
-      font-size: 0.95rem;
-      font-weight: 500;
-    }
-
-    /* Results section */
-    .category-block {
-      margin-bottom: 2.5rem;
-    }
-
-    .category-title {
-      color: var(--text-color);
-      font-size: 1.3rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
+    .section-header {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      
+      h3 {
+        color: var(--text-dark);
+        font-size: 1.25rem;
+        font-weight: 600;
+      }
+      
+      .icon {
+        font-size: 1.5rem;
+        color: var(--primary-blue);
+      }
     }
 
-    .badge {
-      background: var(--secondary-color);
-      color: var(--primary-color);
+    .counter-badge {
+      background: var(--secondary-blue);
+      color: var(--primary-blue);
       padding: 0.25rem 0.75rem;
       border-radius: 20px;
       font-size: 0.85rem;
       font-weight: 500;
     }
 
-    .results-list {
+    .results-grid {
       display: grid;
-      gap: 0.75rem;
-    }
-
-    .result-item {
-      background: white;
-      padding: 1.25rem;
-      border-radius: 12px;
-      border: 1px solid #e9ecef;
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-      cursor: pointer;
-    }
-
-    .result-item:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow);
-      border-color: var(--primary-color);
-    }
-
-    .item-content {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-    }
-
-    .highlight {
-      color: var(--primary-color);
-      font-weight: 500;
-    }
-
-    .job-title {
-      font-weight: 600;
-      color: var(--text-color);
-    }
-
-    .company-name {
-      color: var(--muted-text);
-      font-size: 0.9rem;
-    }
-
-    /* No results */
-    .no-results {
-      text-align: center;
-      padding: 3rem 0;
-    }
-
-    .no-results-content {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: center;
       gap: 1rem;
     }
 
-    .no-results-content .icon {
-      font-size: 2.5rem;
-      opacity: 0.8;
+    .result-card {
+      background: white;
+      padding: 1.5rem;
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow);
+        border-color: var(--primary-blue);
+      }
     }
 
-    .no-results p {
-      color: var(--muted-text);
+    .company-icon, .job-icon {
+      font-size: 1.8rem;
+      color: var(--primary-blue);
+    }
+
+    .company-name {
+      color: var(--primary-blue);
+      font-weight: 600;
       font-size: 1.1rem;
-      line-height: 1.5;
     }
 
-    /* Decorative elements */
-    .decorative-elements {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      pointer-events: none;
-      z-index: 1;
+    .job-title {
+      color: var(--text-dark);
+      font-weight: 600;
+      font-size: 1rem;
     }
 
-    .decorative-circle {
-      position: absolute;
-      border-radius: 50%;
+    .company-name {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem 0;
+      
+      .empty-icon {
+        font-size: 2.5rem;
+        color: var(--primary-blue);
+        opacity: 0.8;
+      }
+      
+      h3 {
+        color: var(--text-dark);
+        font-size: 1.25rem;
+      }
+      
+      p {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+      }
+    }
+
+    .auth-decoration .decoration-circle {
       background: rgba(0, 86, 179, 0.05);
-      filter: blur(40px);
-      animation: float 20s infinite ease-in-out;
     }
 
-    .circle-1 {
-      width: 300px;
-      height: 300px;
-      top: -100px;
-      right: -100px;
-      animation-delay: 0s;
-    }
-
-    .circle-2 {
-      width: 200px;
-      height: 200px;
-      bottom: -50px;
-      left: -50px;
-      animation-delay: 5s;
-    }
-
-    .circle-3 {
-      width: 150px;
-      height: 150px;
-      top: 50%;
-      left: 30%;
-      animation-delay: 10s;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-20px) rotate(5deg); }
-    }
-
-    /* Responsive */
     @media (max-width: 768px) {
-      .search-results-container {
+      .auth-container {
         padding: 1rem;
       }
 
-      .search-card {
+      .auth-card {
         padding: 1.5rem;
-        border-radius: 16px;
-      }
-
-      .search-title {
-        font-size: 1.8rem;
-      }
-
-      .category-title {
-        font-size: 1.1rem;
       }
     }
   `]
